@@ -47,7 +47,7 @@ export default function Home() {
 
     try {
       setIsGeneratingResponse(true);
-      const response = await fetch('http://95.28.220.36:5000/api/generate', {
+      const response = await fetch('http://localhost:5000/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
