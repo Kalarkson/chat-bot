@@ -47,13 +47,13 @@ export default function Home() {
 
     try {
       setIsGeneratingResponse(true);
-      const response = await fetch('http://localhost:5000/api/generate', {
+      const response = await fetch('http://95.28.220.36:11434/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'llama3.1',
+          model: 'wizard-math:13b',
           prompt: prompt,
           stream: true
         })
@@ -66,7 +66,7 @@ export default function Home() {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
 
-      reader.read().then(function processText({ done, value }) {
+      reader.read().then(function processText({ done, value }) {yy
         if (done) {
           setIsGeneratingResponse(false);
           return;
