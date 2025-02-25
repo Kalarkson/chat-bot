@@ -19,6 +19,28 @@ body {
   width: 100%;
 }
 
+.thought-section {
+  background-color: #f0f0f0;
+  border-left: 4px solid #d0d0d0;
+  font-size: 0.9em;
+  padding: 8px;
+  margin: 4px 0;
+}
+
+.chat-container p {
+  margin: 0; 
+  padding: 0;
+}
+
+.chat-container sub {
+  font-size: 0.7em; 
+  vertical-align: baseline; 
+}
+
+.katex {
+  font-size: 1em; 
+}
+
 @media (min-width: 1440px) {
   .chat-container {
     width: 50%;
