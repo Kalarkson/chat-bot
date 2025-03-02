@@ -1,26 +1,27 @@
 <template>
-  <div class="bg-gradient-to-b from-white to-gray-200 flex flex-col items-center justify-between min-h-screen text-black font-roboto overflow-hidden">
+  <div class="bg-gradient-to-b from-red-200 to-cyan-200 flex flex-col items-center justify-between min-h-screen text-black font-roboto overflow-hidden">
     <main class="flex flex-col items-center w-full flex-grow">
       <nav class="w-full p-4">
-        <button @click="clearChat" class="bg-blue-500 text-white px-5 py-2 rounded text-sm">+ Chat</button>
+        <button @click="clearChat" class="bg-blue-500 text-white px-5 py-2 rounded text-sm">Очистить чат</button>
       </nav>
-      <h1 class="text-2xl font-semibold mb-4" v-if="showTitle">AI Assistant</h1>
+      <h1 class="text-2xl font-semibold mb-4" v-if="showTitle">Чат-бот помощник</h1>
       <div class="chat-container flex-grow rounded-lg mb-2 p-4 overflow-y-auto flex flex-col h-96" id="chatContainer">
         <div :class="messageClass(message.type)" :key="index" v-for="(message, index) in messages">
           <div class="flex items-start" v-if="message.type === 'ai'">
             <img src="https://cdn-icons-png.flaticon.com/128/10053/10053283.png" alt="AI Logo" class="w-8 h-8 rounded-full mr-2">
-            <div class="text-gray-700 p-2 rounded-lg w-full text-sm" v-html="formatMessage(message.text)"></div>
+            <div class="text-gray-700 p-2 rounded-lg w-full text-lg" v-html="formatMessage(message.text)"></div>
           </div>
-          <div class="text-gray-700 p-2 rounded-lg w-full text-sm" v-html="formatMessage(message.text)" v-else></div>
+          <div class="text-gray-850 p-2 rounded-lg w-full text-base" v-html="formatMessage(message.text)" v-else></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png" alt="AI Logo" class="w-8 h-8 rounded-gl mr-2">
         </div>
       </div>
     </main>
     <div class="w-full flex flex-col items-center p-4">
       <div class="input-container flex mb-2">
-        <textarea id="messageInput" placeholder="Message AI Assistant" class="flex-grow p-2 border border-gray-300 rounded-l text-black text-sm resize-none overflow-y-auto" rows="1" v-model="newMessage" @keydown.ctrl.enter="sendMessage" :disabled="isGenerating"></textarea>
-        <button @click="sendMessage" class="bg-blue-500 text-white px-4 py-2 rounded-r" :disabled="isGenerating">Send</button>
+        <textarea id="messageInput" placeholder="Message AI Assistant" class="flex-grow p-2 border border-black shadow-[0_0_0_2px_black] rounded-l text-black text-base resize-none overflow-y-auto" rows="1" v-model="newMessage" @keydown.shift.ctrl="sendMessage" ></textarea>
+        <button @click="sendMessage" class="bg-blue-500 text-white px-6 py-3 shadow-[0_0_0_2px_black] rounded-r" :disabled="isGenerating">Отправить</button>
       </div>
-      <p class="text-gray-500 text-sm">Создано с любовью к технологиям и инновациям.</p>
+      <p class="text-gray-500 text-sm">Создано при поддержке Klark</p>
     </div>
   </div>
 </template>
@@ -76,7 +77,7 @@ export default {
           this.currentBuffer = '';
           this.processStreamedResponse(response);
         } else {
-          this.messages.push({ type: 'ai', text: 'Ошибка при получении ответа от API.' });
+          this.messages.push({ type: 'ai', text: 'Превышено время ожидания сервера💤' });
           this.isGenerating = false;
         }
         this.newMessage = '';
@@ -89,10 +90,10 @@ export default {
     },
     async sendToApi(history) {
       try {
-        const response = await fetch('http://128.75.77.222:5000/api/chat', {
+        const response = await fetch('http://128.69.11.50:5000/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ model: 'proekt10klass:latest', messages: history })
+          body: JSON.stringify({ model: 'chat-bot', messages: history })
         });
         if (!response.ok) {
           const errorData = await response.json();
