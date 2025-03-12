@@ -89,7 +89,7 @@ export default {
     },
     async sendToApi(history) {
       try {
-        const response = await fetch('http://128.75.77.222:5000/api/chat', {
+        const response = await fetch('http://128.69.11.50:5000/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ model: 'proekt10klass:latest', messages: history })

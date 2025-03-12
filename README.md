@@ -1,4 +1,4 @@
-# deepseek-bot
+# chat-bot
 
 ## Project setup
 ```
