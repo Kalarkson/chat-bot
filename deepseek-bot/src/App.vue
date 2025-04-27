@@ -7,21 +7,31 @@
       <h1 class="text-2xl font-semibold mb-4" v-if="showTitle">Чат-бот помощник</h1>
       <div class="chat-container flex-grow rounded-lg mb-2 p-4 overflow-y-auto flex flex-col h-96" id="chatContainer">
         <div :class="messageClass(message.type)" :key="index" v-for="(message, index) in messages">
-          <div class="flex items-start" v-if="message.type === 'ai'">
-            <img src="https://cdn-icons-png.flaticon.com/128/10053/10053283.png" alt="AI Logo" class="w-8 h-8 rounded-full mr-2">
-            <div class="text-gray-700 p-2 rounded-lg w-full text-lg" v-html="formatMessage(message.text)"></div>
-          </div>
-          <div class="text-gray-850 p-2 rounded-lg w-full text-base" v-html="formatMessage(message.text)" v-else></div>
-            <img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png" alt="AI Logo" class="w-8 h-8 rounded-gl mr-2">
-        </div>
+  <div class="flex items-start" v-if="message.type === 'ai'">
+    <img src="https://cdn-icons-png.flaticon.com/128/10053/10053283.png" alt="Логотип ИИ" class="w-8 h-8 rounded-full mr-2">
+    <div class="text-gray-700 p-2 rounded-lg w-full text-lg" v-html="formatMessage(message.text)"></div>
+  </div>
+  <div class="flex items-start justify-end" v-else>
+    <div class="text-gray-850 p-2 rounded-lg w-full text-base" v-html="formatMessage(message.text)"></div>
+    <img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png" alt="Аватар пользователя" class="w-8 h-8 rounded-l ml-2">
+  </div>
+</div>
       </div>
     </main>
     <div class="w-full flex flex-col items-center p-4">
       <div class="input-container flex mb-2">
-        <textarea id="messageInput" placeholder="Message AI Assistant" class="flex-grow p-2 border border-black shadow-[0_0_0_2px_black] rounded-l text-black text-base resize-none overflow-y-auto" rows="1" v-model="newMessage" @keydown.shift.ctrl="sendMessage" ></textarea>
+        <textarea 
+          id="messageInput" 
+          placeholder="Сообщение ассистенту" 
+          class="flex-grow p-2 border border-black shadow-[0_0_0_2px_black] rounded-l text-black text-base resize-none overflow-y-auto" 
+          rows="1" 
+          v-model="newMessage" 
+          @keydown.enter.exact.prevent="sendMessage"
+          @keydown.shift.enter.exact.prevent="newMessage += '\n'"
+        ></textarea>
         <button @click="sendMessage" class="bg-blue-500 text-white px-6 py-3 shadow-[0_0_0_2px_black] rounded-r" :disabled="isGenerating">Отправить</button>
       </div>
-      <p class="text-gray-500 text-sm">Создано при поддержке Klark</p>
+      <p class="text-gray-500 text-sm">Made in Russia</p>
     </div>
   </div>
 </template>
@@ -90,7 +100,7 @@ export default {
     },
     async sendToApi(history) {
       try {
-        const response = await fetch('http://128.69.11.50:5000/api/chat', {
+        const response = await fetch('http://128.69.11.50:11434/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ model: 'chat-bot', messages: history })
