@@ -20,3 +20,6 @@ ollama run deepseek-r1:14b
 ```
 sudo OLLAMA_HOST="0.0.0.0:5000" OLLAMA_ORIGINS="*" OLLAMA_MODELS=/usr/share/ollama/.ollama/models ollama serve
 ```
+
+
+
